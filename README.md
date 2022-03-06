@@ -20,11 +20,18 @@ A perfect guide to do this configuration is [this one from the RaspiBolt project
 Once you're done with the SSH Login configuration login to your raspberry with your admin account (usually pi):
 ssh pi@raspberrypi
 
-If you're going to use your regular pc you can ignore the above mentioned procedure but please consider using strong measures to protect your laptop because your posts will be stored there.
+If you're going to use your regular pc you can ignore the above mentioned procedure but please consider using strong measures to protect your laptop because your posts will be stored there. Keep in mind that if the UFW configuration for your personal pc would be different from the one described later here: consider to customize it as you need to be able to connect to other services (internet, etc.).
 
 ##  Packages installation
 To install the packages we need just run:
 
+### Security
+For everything related to the security of your _server_ you can refer to [this page](https://raspibolt.org/guide/raspberry-pi/security.html#enabling-the-uncomplicated-firewall) that will guide step-by-step in the installation and configuratino process of four important packages we will need: **uncomplicated Firewall**, **fail2ban**, **NGINX**.
+### TOR
+To install TOR simply run
+```
+$ sudo apt install tor
+```
 ### Jekyll
 ```
 $ sudo apt-get update
