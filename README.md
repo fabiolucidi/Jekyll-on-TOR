@@ -157,7 +157,7 @@ and then build and execute the site with:
 bundle exec jekyll serve --port 4001 --detach
 ```
 **Now your website is live and accessible via TOR** from the onion address we've fetched before (in the example: abcdefg..............xyz.onion).
-
+<!-- This is commented out.
 ### Jekyll as a service
 A very useful hint is running jekyll as a service instead of a command. [This script](https://gist.github.com/yuan3y/51f6534c9daaa2f64baa64e1a3c361aa) from
 @yuan3y will do the job.
@@ -203,3 +203,4 @@ Then start and enable the service with
 $ sudo systemctl start jekyll.service
 $ sudo systemctl enable jekyll.service
 ```
+ -->
