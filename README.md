@@ -28,37 +28,37 @@ For everything related to the security of your _server_ you can refer to [this p
 ### TOR
 To install TOR simply run
 ```
-$ sudo apt install tor
+sudo apt install tor
 ```
 ### Jekyll
 ```
-$ sudo apt-get update
-$ sudo apt-get install software-properties-common -y
-$ sudo apt-get install ruby-full -y
+sudo apt-get update
+sudo apt-get install software-properties-common -y
+sudo apt-get install ruby-full -y
 ```
 
 ## Create a dedicated user
 We'll create a dedicated user for the jekyll installation and we'll call it jekyll. We'll configure it with the `--disabled-password` option
 ```
-$ sudo adduser --gecos "" --disabled-password jekyll
+sudo adduser --gecos "" --disabled-password jekyll
 ```
 And we will add jekyll user to tor group
 ```
-$ sudo adduser jekyll debian-tor
+sudo adduser jekyll debian-tor
 ```
 
 A dedicated user is not fundamental, but if you run more than one service on the same machine it would be useful. Moreover, it helps keeping things clean and removes the risk to accidentally delete your files or folder since they're separated from your regular account.
 
 If you want to use your regular account you should add it to tor group
 ```
-$ sudo adduser yourusername debian-tor
+sudo adduser _yourusername_ debian-tor
 ```
 ## Reverse Proxy
 NGINX will help us managing all the connections in a particular way called _reverse proxy_. If you want to read more about it you can start [here](https://www.nginx.com/resources/glossary/reverse-proxy-server/).
 
 We'll create our jekyll-reverse-proxy.conf file:
 ```
-$ sudo nano /etc/nginx/streams-enabled/jekyll-reverse-proxy.conf
+sudo nano /etc/nginx/streams-enabled/jekyll-reverse-proxy.conf
 ```
 ```
 upstream jekyll {
@@ -72,24 +72,24 @@ server {
 ```
 Once we've saved the file we need check the configuration and reload.
 ```
-$ sudo nginx -t
-$ sudo systemctl reload nginx
+sudo nginx -t
+sudo systemctl reload nginx
 ```
 ## Configure Firewall
 Let's configure the firewall to allow incoming requests and only those we want:
 ```
-$ sudo ufw allow 4001/tcp comment 'allow Jekyll SSL'
+sudo ufw allow 4001/tcp comment 'allow Jekyll SSL'
 ```
 And check if the instruction is ok with:
 ```
-$ sudo ufw status
+sudo ufw status
 ```
 
 ## TOR
 Configuring TOR could be tricky, but not this time :) We literally just need to add a three lines section and get our Onion address.
 So first things firts, let's add the following lines in the “location-hidden services” section in the torrc file.
 ```
-$ sudo nano /etc/tor/torrc
+sudo nano /etc/tor/torrc
 ```
 ```
 ### This section is just for location-hidden services ###
@@ -100,8 +100,8 @@ HiddenServicePort 80 127.0.0.1:4001
 Save and exit.
 Then we need to reload Tor config and get our onion address:
 ```
-$ sudo systemctl reload tor
-$ sudo cat /var/lib/tor/hidden_service_jekyll/hostname
+sudo systemctl reload tor
+sudo cat /var/lib/tor/hidden_service_jekyll/hostname
 > abcdefg..............xyz.onion
 ```
 Now our system configuration is complete and we've our onion address that we'll share to those we want to read our site. We just need to build one.
@@ -110,22 +110,20 @@ Now our system configuration is complete and we've our onion address that we'll 
 ## Run Jekyll as a non super user
 Now it's time to work on our site, so we need to login with our dedicated user:
 ```
-$ sudo su - jekyll
+sudo su - jekyll
 ```
 To run Jekyll as a non super user we need to add these lines to the `.bashrc` file (it's in the home folder).
-`$ nano .bashrc`
+`nano .bashrc`
 ```
----
 # Ruby exports
 export GEM_HOME=$HOME/gems
 export PATH=$HOME/gems/bin:$PATH
----
 ```
 Then run
-`$. .bashrc`
+`. .bashrc`
 to reload it. And then:
 ```
-$ gem install jekyll bundler
+gem install jekyll bundler
 ```
 To install (almost) everything we need.
 
@@ -134,9 +132,9 @@ This tells `gem` to place its gems within the user’s home folder, not in a sys
 ## Build your site
 If you're starting from scratch you can just run:
 
-`$ jekyll new myswebsite`
+`jekyll new myswebsite`
 and then
-`$ cd myswebsite`
+`cd myswebsite`
 to access the folder.
 
 If you want to import something already published on GitHub Pages (or another Jekyll site) to create a _TOR Version_ of that website, you need to create a folder and access it
