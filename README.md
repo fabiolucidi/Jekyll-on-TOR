@@ -113,7 +113,8 @@ Now it's time to work on our site, so we need to login with our dedicated user:
 sudo su - jekyll
 ```
 To run Jekyll as a non super user we need to add these lines to the `.bashrc` file (it's in the home folder).
-`nano .bashrc`
+
+Open the file with `nano .bashrc` and add the following:
 ```
 # Ruby exports
 export GEM_HOME=$HOME/gems
